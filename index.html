@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבון הוצאות דלק וטרמפים - מקיף ומעוצב</title>
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-card: rgba(15, 23, 42, 0.88);
+            --bg-input: rgba(30, 41, 59, 0.9);
+            
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.35);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-sub: #cbd5e1;
+            
+            --border: rgba(255, 255, 255, 0.12);
+            --border-highlight: rgba(255, 255, 255, 0.25);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+        }
+
+        body.light-theme {
+            --bg-card: rgba(255, 255, 255, 0.92);
+            --bg-input: rgba(241, 245, 249, 0.95);
+            
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-sub: #334155;
+            
+            --border: rgba(0, 0, 0, 0.1);
+            --border-highlight: rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Assistant', sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(11, 15, 25, 0.75), rgba(11, 15, 25, 0.85)), url('thumbs_wp_cars_4k_043.jpg.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-highlight);
+            padding: 22px 30px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b);
+        }
+
+        .header-title-box h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title-box p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .grid-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .grid-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 700px) {
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-sub);
+        }
+
+        .btn-gps {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-gps:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            grid-column: span 2;
+            background: var(--bg-input);
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-highlight);
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            right: 14px;
+            font-size: 16px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 42px 14px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-highlight);
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .buttons-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            grid-column: span 2;
+        }
+
+        @media (max-width: 700px) {
+            .buttons-row {
+                grid-column: span 1;
+            }
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            flex: 2;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-sub);
+            border: 1px solid var(--border-highlight);
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-main);
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            border: 1px solid var(--border-highlight);
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 24px;
+            background: var(--bg-input);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            display: none;
+            animation: fadeIn 0.3s ease;
+            grid-column: span 2;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result p {
+            margin: 10px 0;
+            color: var(--text-sub);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result .total-cost {
+            color: #34d399;
+            font-size: 21px;
+            font-weight: 800;
+            margin-top: 14px;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+        }
+
+        .result .passengers-cost {
+            color: #60a5fa;
+            font-size: 19px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .btn-action-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            flex: 2;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-save-trip {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            flex: 1;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+        }
+
+        .btn-copy:hover, .btn-save-trip:hover {
+            transform: translateY(-2px);
+        }
+
+        .loading-box {
+            grid-column: span 2;
+            text-align: center;
+            color: #f59e0b;
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* סקשן מועדפים ומעקב הוצאות */
+        .favorites-section, .history-section {
+            margin-top: 20px;
+            grid-column: span 2;
+        }
+
+        .favorites-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .btn-add-fav {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .favorites-chips {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: var(--bg-input);
+            border: 1px solid var(--border-highlight);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
+        }
+
+        .chip:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .chip-delete, .chip-edit {
+            cursor: pointer;
+            margin-left: 2px;
+        }
+        .chip-delete:hover { color: #f43f5e; }
+        .chip-edit:hover { color: #38bdf8; }
+
+        .history-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .history-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-list {
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-sub);
+        }
+
+        .history-total {
+            font-size: 16px;
+            font-weight: 800;
+            color: #34d399;
+            border-top: 2px solid var(--border);
+            padding-top: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-clear-history {
+            background: rgba(244, 63, 94, 0.15);
+            color: #f43f5e;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* צבעי אייקונים ייחודיים */
+        .icon-blue { color: #3b82f6; }
+        .icon-green { color: #10b981; }
+        .icon-amber { color: #f59e0b; }
+        .icon-purple { color: #8b5cf6; }
+        .icon-rose { color: #f43f5e; }
+        .icon-cyan { color: #06b6d4; }
+        .icon-emerald { color: #34d399; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-title-box">
+            <h1><i class="fa-solid fa-route icon-blue"></i> מחשבון דלק וטרמפים</h1>
+            <p>תכנון הוצאות דלק חכם</p>
+        </div>
+        <button class="btn-icon" onclick="toggleTheme()" title="החלף ערכת נושא"><i class="fa-solid fa-moon icon-amber" id="themeIcon"></i></button>
+    </header>
+
+    <div class="glass-card">
+        <div class="grid-inputs">
+            
+            <div class="form-group full-width">
+                <label for="carInput"><i class="fa-solid fa-car-side icon-blue"></i> בחירת דגם רכב (מאגר מורחב):</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass icon-blue"></i>
+                    <input type="text" id="carInput" class="form-control" list="carList" placeholder="הקלד או בחר: טויוטה פריוס, קיה פיקנטו, סקודה אוקטביה..." oninput="checkCarSelection()">
+                    <datalist id="carList">
+                        <option value="טויוטה פריוס (היברידי)" data-consumption="22">
+                        <option value="טויוטה קורולה (היברידי)" data-consumption="20">
+                        <option value="יונדאי איוניק (היברידי)" data-consumption="18">
+                        <option value="קיה נירו (היברידי)" data-consumption="18">
+                        <option value="יונדאי קונה (היברידי)" data-consumption="19">
+                        <option value="הונדה ג'אז (היברידי)" data-consumption="23">
+                        <option value="טויוטה יאריס (היברידי)" data-consumption="24">
+                        <option value="טויוטה ראב 4 (היברידי)" data-consumption="16">
+                        <option value="קיה ספורטאז' (היברידי)" data-consumption="15">
+                        <option value="יונדאי טוסון (היברידי)" data-consumption="15">
+                        <option value="הונדה סיוויק (היברידי)" data-consumption="20">
+                        <option value="לקסוס NX (היברידי)" data-consumption="15">
+                        <option value="לקסוס RX (היברידי)" data-consumption="13">
+                        <option value="קיה סורנטו (היברידי)" data-consumption="14">
+                        <option value="יונדאי סנטה פה (היברידי)" data-consumption="14">
+                        
+                        <option value="טויוטה קורולה (בנזין)" data-consumption="15">
+                        <option value="יונדאי אלנטרה (בנזין)" data-consumption="15">
+                        <option value="מאזדה 3 (בנזין)" data-consumption="14">
+                        <option value="הונדה סיביק (בנזין)" data-consumption="14">
+                        <option value="סקודה אוקטביה (בנזין)" data-consumption="16">
+                        <option value="פולקסווגן גולף" data-consumption="14">
+                        <option value="פולקסווגן פולו" data-consumption="15">
+                        <option value="מיצובישי לאנסר" data-consumption="12">
+                        <option value="סוזוקי סוויפט" data-consumption="17">
+                        <option value="סוזוקי בלנו" data-consumption="17">
+                        <option value="מאזדה 2" data-consumption="16">
+                        <option value="שברולט קרוז" data-consumption="12">
+                        <option value="רנו מגאן" data-consumption="14">
+                        <option value="פיג'ו 308" data-consumption="15">
+                        <option value="סיטרואן C4" data-consumption="15">
+                        <option value="סובארו אימפרזה" data-consumption="13">
+                        <option value="סובארו XV" data-consumption="12">
+                        <option value="אופל אסטרה" data-consumption="15">
+                        <option value="פורד פוקוס" data-consumption="13">
+                        
+                        <option value="קיה פיקנטו (עירוני קטן)" data-consumption="13">
+                        <option value="יונדאי i10" data-consumption="13">
+                        <option value="סוזוקי אלטו / סלפ리오" data-consumption="13">
+                        <option value="קיה ריו" data-consumption="14">
+                        <option value="מיצובישי אטראージュ" data-consumption="15">
+                        <option value="שברולט ספארק" data-consumption="14">
+                        <option value="פיאט 500" data-consumption="16">
+                        <option value="יונדאי i20" data-consumption="14">
+                        <option value="סיאט איביזה" data-consumption="15">
+                        <option value="סקודה פאביה" data-consumption="16">
+                        <option value="רנו קליאו" data-consumption="16">
+                        <option value="פיג'ו 208" data-consumption="16">
+                        <option value="טויוטה אייגו" data-consumption="18">
+                        <option value="מיצובישי ספייס סטאר" data-consumption="17">
+                        
+                        <option value="קיה ספורטאז' (ג'יפון בנזין)" data-consumption="12">
+                        <option value="יונדאי טוסון (ג'יפון בנזין)" data-consumption="12">
+                        <option value="מיצובישי אאוטלנדר" data-consumption="11">
+                        <option value="ניסאן קשקאי" data-consumption="13">
+                        <option value="מאזדה CX-5" data-consumption="11">
+                        <option value="יונדאי קונה (בנזין)" data-consumption="14">
+                        <option value="סוזוקי ויטארה" data-consumption="14">
+                        <option value="ג'יפ רנגייד" data-consumption="10">
+                        <option value="שברולט טראקס" data-consumption="12">
+                        <option value="פיג'ו 3008" data-consumption="14">
+                        <option value="רנו קפצ'ור" data-consumption="16">
+                        <option value="סיאט אטקה" data-consumption="14">
+                        <option value="סקודה קארוק" data-consumption="15">
+                        <option value="צ'רי טיגו 7" data-consumption="12">
+                        <option value="צ'רי טיגו 8" data-consumption="11">
+                        <option value="אנג'י קוראנדו" data-consumption="11">
+                        <option value="פורד קוגה" data-consumption="12">
+                        <option value="קיה סטוניק" data-consumption="15">
+                        
+                        <option value="סובארו פורסטר" data-consumption="11">
+                        <option value="סקודה קודיאק" data-consumption="12">
+                        <option value="יונדאי סנטה פה" data-consumption="10">
+                        <option value="קיה סורנטו" data-consumption="11">
+                        <option value="טויוטה לנד קרוזר" data-consumption="9">
+                        <option value="מיצובישי פג'רו" data-consumption="8">
+                        <option value="לנד רובר דיסקברי" data-consumption="8">
+                        
+                        <option value="רכב דיזל חסכוני (סקודה / פולקסווגן)" data-consumption="17">
+                        <option value="רכב מסחרי דיזל (רנו / סיטרואן / פיג'ו)" data-consumption="13">
+                        <option value="יונדאי אקסנט (דיזל)" data-consumption="18">
+                    </datalist>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="kmPerLiter"><i class="fa-solid fa-gauge-high icon-amber"></i> צריכת דלק (ק"מ לליטר):</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-gas-pump icon-amber"></i>
+                    <input type="number" id="kmPerLiter" class="form-control" value="15" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fuelPrice"><i class="fa-solid fa-shekel-sign icon-green"></i> מחיר ליטר דלק (₪):</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-tag icon-green"></i>
+                    <input type="number" id="fuelPrice" class="form-control" value="7.55" step="0.01">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="origin">
+                    <span><i class="fa-solid fa-location-dot icon-rose"></i> נקודת מוצא:</span>
+                    <button type="button" class="btn-gps" onclick="getMyLocation()"><i class="fa-solid fa-location-crosshairs"></i> המיקום שלי</button>
+                </label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-circle-dot icon-rose"></i>
+                    <input type="text" id="origin" class="form-control" placeholder="לדוגמה: בני ברק, ירושלים...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="destination"><i class="fa-solid fa-flag-checkered icon-purple"></i> יעד הנסיעה:</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-location-pin icon-purple"></i>
+                    <input type="text" id="destination" class="form-control" placeholder="לדוגמה: תל אביב, חיפה...">
+                </div>
+            </div>
+
+            <!-- נסיעות מועדפות עם אפשרות הוספה, עריכה ומחיקה חופשית -->
+            <div class="favorites-section">
+                <div class="favorites-header">
+                    <label style="margin-bottom:0;"><i class="fa-solid fa-star icon-amber"></i> נסיעות מועדפות (עריכה חופשית):</label>
+                    <button class="btn-add-fav" onclick="addNewFavorite()"><i class="fa-solid fa-plus"></i> הוסף מסלול נוכחי</button>
+                </div>
+                <div class="favorites-chips" id="favoritesChips">
+                    <!-- יטענו אוטומטית מהזיכרון -->
+                </div>
+            </div>
+
+            <div class="form-group full-width" style="margin-top: 15px;">
+                <label for="passengersCount"><i class="fa-solid fa-users icon-cyan"></i> מספר נוסעים (לחישוב השתתפות בטרמפים):</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user-group icon-cyan"></i>
+                    <input type="number" id="passengersCount" class="form-control" value="1" min="1" max="10">
+                </div>
+            </div>
+
+            <!-- אפשרות הלוך-חזור -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="roundTrip">
+                <label for="roundTrip"><i class="fa-solid fa-arrows-rotate icon-amber"></i> נסיעת הלוך-חזור (מכפיל מרחק ועלות ב-2)</label>
+            </div>
+
+            <div id="loadingStatus" class="loading-box">
+                <i class="fa-solid fa-earth-americas fa-spin icon-amber" style="font-size: 20px;"></i> מחשב מרחק מדויק מהמפות...
+            </div>
+
+            <div class="buttons-row">
+                <button class="btn btn-primary" onclick="calculateTripRealTime()">
+                    <i class="fa-solid fa-calculator"></i> חשב עלות נסיעה וטרמפים
+                </button>
+                <button class="btn btn-secondary" onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-right"></i> איפוס
+                </button>
+            </div>
+
+            <div id="resultBox" class="result">
+                <p id="routeText"></p>
+                <p id="distanceText"></p>
+                <p id="litersText"></p>
+                <p class="total-cost" id="costText"></p>
+                <p class="passengers-cost" id="passengersText"></p>
+                <div class="btn-action-group">
+                    <button class="btn-copy" onclick="copyTripSummary()">
+                        <i class="fa-solid fa-paper-plane"></i> העתק סיכום נסיעה
+                    </button>
+                    <button class="btn-save-trip" onclick="saveCurrentTripToHistory()">
+                        <i class="fa-solid fa-floppy-disk"></i> הוסף למעקב הוצאות
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- סקשן מעקב הוצאות חודשי -->
+    <div class="history-section">
+        <div class="history-card">
+            <h3><i class="fa-solid fa-wallet icon-emerald"></i> מעקב נסיעות והוצאות מצטברות</h3>
+            <ul class="history-list" id="historyList">
+                <!-- יטענו מהזיכרון -->
+            </ul>
+            <div class="history-total">
+                <span>סך הכל חודשי:</span>
+                <span id="historyTotalCost">₪0.00</span>
+            </div>
+            <button class="btn-clear-history" onclick="clearHistory()">
+                <i class="fa-solid fa-trash-can"></i> איפוס היסטוריה
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let isLightTheme = localStorage.getItem('fuel_light_theme') === 'true';
+    let lastTripData = null;
+    applyTheme();
+    loadFavorites();
+    loadHistory();
+
+    function toggleTheme() {
+        isLightTheme = !isLightTheme;
+        localStorage.setItem('fuel_light_theme', isLightTheme);
+        applyTheme();
+    }
+
+    function applyTheme() {
+        const icon = document.getElementById('themeIcon');
+        if (isLightTheme) {
+            document.body.classList.add('light-theme');
+            icon.className = 'fa-solid fa-sun icon-amber';
+        } else {
+            document.body.classList.remove('light-theme');
+            icon.className = 'fa-solid fa-moon icon-amber';
+        }
+    }
+
+    function checkCarSelection() {
+        const val = document.getElementById('carInput').value;
+        const options = document.getElementById('carList').options;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === val) {
+                const consumption = options[i].getAttribute('data-consumption');
+                document.getElementById('kmPerLiter').value = consumption;
+                break;
+            }
+        }
+    }
+
+    // איתור מיקום אוטומטי (GPS)
+    function getMyLocation() {
+        if (!navigator.geolocation) {
+            alert("הדפדפן שלך אינו תומך באיתור מיקום.");
+            return;
+        }
+        const loadingEl = document.getElementById('loadingStatus');
+        loadingEl.style.display = 'flex';
+        loadingEl.innerHTML = '<i class="fa-solid fa-location-crosshairs fa-spin icon-amber" style="font-size: 20px;"></i> מאתר את המיקום הנוכחי שלך...';
+
+        navigator.geolocation.getCurrentPosition(async function(position) {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            try {
+                let res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=he`);
+                let data = await res.json();
+                if (data && data.address) {
+                    let city = data.address.city || data.address.town || data.address.village || data.address.municipality || data.address.suburb || "המיקום שלי";
+                    document.getElementById('origin').value = city;
+                } else {
+                    document.getElementById('origin').value = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+                }
+            } catch (e) {
+                document.getElementById('origin').value = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+            } finally {
+                loadingEl.style.display = 'none';
+                loadingEl.innerHTML = '<i class="fa-solid fa-earth-americas fa-spin icon-amber" style="font-size: 20px;"></i> מחשב מרחק מדויק מהמפות...';
+            }
+        }, function(error) {
+            loadingEl.style.display = 'none';
+            alert("שגיאה באיתור המיקום. וודא שהרשאת מיקום מופעלת בדפדפן.");
+        }, { timeout: 10000 });
+    }
+
+    // הפעלת חישוב אוטומטי בלחיצה על Enter
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                calculateTripRealTime();
+            }
+        });
+    });
+
+    async function getCoordinates(address) {
+        let cleanAddress = address.trim();
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanAddress + ', ישראל')}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data && data.length > 0) {
+            return {
+                lat: parseFloat(data[0].lat),
+                lon: parseFloat(data[0].lon),
+                displayName: cleanAddress
+            };
+        }
+        throw new Error(`לא נמצאה הכתובת: ${address}`);
+    }
+
+    async function calculateTripRealTime() {
+        const origin = document.getElementById('origin').value.trim();
+        const destination = document.getElementById('destination').value.trim();
+        const kmPerLiter = parseFloat(document.getElementById('kmPerLiter').value);
+        const fuelPrice = parseFloat(document.getElementById('fuelPrice').value);
+        const passengers = parseInt(document.getElementById('passengersCount').value) || 1;
+        const isRoundTrip = document.getElementById('roundTrip').checked;
+
+        if (!origin || !destination) {
+            alert("נא להזין מוצא ויעד");
+            return;
+        }
+
+        const loadingEl = document.getElementById('loadingStatus');
+        loadingEl.style.display = 'flex';
+        document.getElementById('resultBox').style.display = 'none';
+
+        try {
+            const originObj = await getCoordinates(origin);
+            const destObj = await getCoordinates(destination);
+
+            const routeUrl = `https://router.project-osrm.org/route/v1/driving/${originObj.lon},${originObj.lat};${destObj.lon},${destObj.lat}?overview=false`;
+            const routeResponse = await fetch(routeUrl);
+            const routeData = await routeResponse.json();
+
+            if (routeData.routes && routeData.routes.length > 0) {
+                let baseDistanceKm = routeData.routes[0].distance / 1000;
+                let distanceKm = isRoundTrip ? baseDistanceKm * 2 : baseDistanceKm;
+                
+                let litersNeeded = distanceKm / kmPerLiter;
+                let totalCost = litersNeeded * fuelPrice;
+                let costPerPassenger = passengers > 1 ? totalCost / passengers : totalCost;
+
+                lastTripData = {
+                    origin: originObj.displayName,
+                    destination: destObj.displayName,
+                    distance: distanceKm.toFixed(1),
+                    liters: litersNeeded.toFixed(2),
+                    cost: totalCost.toFixed(2),
+                    passengers,
+                    costPerPassenger: costPerPassenger.toFixed(2),
+                    isRoundTrip
+                };
+
+                const tripTypeLabel = isRoundTrip ? ' (הלוך-חזור)' : '';
+                document.getElementById('routeText').innerHTML = `<i class="fa-solid fa-map-location-dot icon-blue"></i> מסלול נסיעה${tripTypeLabel}: <strong>${originObj.displayName} ➔ ${destObj.displayName}</strong>`;
+                document.getElementById('distanceText').innerHTML = `<i class="fa-solid fa-ruler-horizontal icon-amber"></i> מרחק מדויק מהמפות: <strong>${distanceKm.toFixed(1)} ק"מ</strong>`;
+                document.getElementById('litersText').innerHTML = `<i class="fa-solid fa-gas-pump icon-rose"></i> כמות דלק נדרשת: <strong>${litersNeeded.toFixed(2)} ליטרים</strong>`;
+                document.getElementById('costText').innerHTML = `<i class="fa-solid fa-coins icon-emerald"></i> עלות נסיעה כוללת: <strong>₪${totalCost.toFixed(2)}</strong>`;
+
+                if (passengers > 1) {
+                    document.getElementById('passengersText').innerHTML = `<i class="fa-solid fa-user-check icon-cyan"></i> עלות לכל נוסע (${passengers} משתתפים): ₪${costPerPassenger.toFixed(2)}`;
+                    document.getElementById('passengersText').style.display = 'flex';
+                } else {
+                    document.getElementById('passengersText').style.display = 'none';
+                }
+                
+                const resultBox = document.getElementById('resultBox');
+                resultBox.style.display = 'block';
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                throw new Error("לא נמצא מסלול נסיעה מתאים");
+            }
+        } catch (error) {
+            alert("שגיאה באיתור המיקום או בחישוב המסלול דרך הרשת. נסה לרשום את שם היישוב בצורה מלאה ומדויקת יותר.");
+        } finally {
+            loadingEl.style.display = 'none';
+        }
+    }
+
+    function copyTripSummary() {
+        if (!lastTripData) return;
+        let text = `🚗 סיכום נסיעה${lastTripData.isRoundTrip ? ' (הלוך-חזור)' : ''}: ${lastTripData.origin} ➔ ${lastTripData.destination}\n`;
+        text += `📏 מרחק: ${lastTripData.distance} ק"מ\n`;
+        text += `⛽ דלק נדרש: ${lastTripData.liters} ליטר\n`;
+        text += `💰 עלות כוללת: ₪${lastTripData.cost}`;
+        if (lastTripData.passengers > 1) {
+            text += `\n👥 עלות לנוסע (${lastTripData.passengers} נוסעים): ₪${lastTripData.costPerPassenger}`;
+        }
+
+        navigator.clipboard.writeText(text).then(() => {
+            alert("סיכום הנסיעה הועתק ללוח בהצלחה!");
+        });
+    }
+
+    // ניהול מועדפים עם אפשרות עריכה חופשית של השמות והערים
+    function getFavorites() {
+        return JSON.parse(localStorage.getItem('fuel_favorites')) || [
+            { name: 'כולל', origin: 'בני ברק', dest: 'ירושלים' },
+            { name: 'הורים', origin: 'בני ברק', dest: 'חיפה' },
+            { name: 'סבא', origin: 'בני ברק', dest: 'פתח תקווה' },
+            { name: 'עבודה', origin: 'בני ברק', dest: 'תל אביב' }
+        ];
+    }
+
+    function loadFavorites() {
+        let favorites = getFavorites();
+        const container = document.getElementById('favoritesChips');
+        container.innerHTML = '';
+        favorites.forEach((fav, index) => {
+            let chip = document.createElement('div');
+            chip.className = 'chip';
+            chip.innerHTML = `
+                <span onclick="useFavorite(${index})" style="display:inline-flex; align-items:center; gap:6px;">
+                    <i class="fa-solid fa-bookmark icon-amber"></i> ${fav.name}: <strong>${fav.origin} ➔ ${fav.dest}</strong>
+                </span>
+                <i class="fa-solid fa-pen chip-edit" onclick="editFavorite(${index}, event)" title="ערוך שם או ערים"></i>
+                <i class="fa-solid fa-xmark chip-delete" onclick="deleteFavorite(${index}, event)" title="מחק"></i>
+            `;
+            container.appendChild(chip);
+        });
+    }
+
+    function useFavorite(index) {
+        let favorites = getFavorites();
+        if (favorites[index]) {
+            document.getElementById('origin').value = favorites[index].origin;
+            document.getElementById('destination').value = favorites[index].dest;
+            calculateTripRealTime();
+        }
+    }
+
+    function addNewFavorite() {
+        let origin = document.getElementById('origin').value.trim();
+        let destination = document.getElementById('destination').value.trim();
+        if (!origin || !destination) {
+            alert("נא להזין מוצא ויעד בשדות למעלה כדי לשמור כמסלול מועדף");
+            return;
+        }
+        let name = prompt("הכנס שם תיאורי למסלול (למשל: כולל, הורים, סבא...):", "יעד חדש");
+        if (!name) return;
+
+        let favorites = getFavorites();
+        favorites.push({ name, origin, dest: destination });
+        localStorage.setItem('fuel_favorites', JSON.stringify(favorites));
+        loadFavorites();
+        alert("המסלול נוסף בהצלחה!");
+    }
+
+    function editFavorite(index, event) {
+        event.stopPropagation();
+        let favorites = getFavorites();
+        let fav = favorites[index];
+
+        let newName = prompt("ערוך את שם המסלול:", fav.name);
+        if (newName === null) return;
+        let newOrigin = prompt("ערוך את נקודת המוצא (עיר):", fav.origin);
+        if (newOrigin === null) return;
+        let newDest = prompt("ערוך את יעד הנסיעה (עיר):", fav.dest);
+        if (newDest === null) return;
+
+        favorites[index] = {
+            name: newName.trim() || fav.name,
+            origin: newOrigin.trim() || fav.origin,
+            dest: newDest.trim() || fav.dest
+        };
+
+        localStorage.setItem('fuel_favorites', JSON.stringify(favorites));
+        loadFavorites();
+        alert("המועדף עודכן בהצלחה!");
+    }
+
+    function deleteFavorite(index, event) {
+        event.stopPropagation();
+        let favorites = getFavorites();
+        favorites.splice(index, 1);
+        localStorage.setItem('fuel_favorites', JSON.stringify(favorites));
+        loadFavorites();
+    }
+
+    // מעקב הוצאות חודשי
+    function saveCurrentTripToHistory() {
+        if (!lastTripData) return;
+        let history = JSON.parse(localStorage.getItem('fuel_history')) || [];
+        history.unshift({
+            route: `${lastTripData.origin} ➔ ${lastTripData.destination}`,
+            cost: parseFloat(lastTripData.cost),
+            date: new Date().toLocaleDateString('he-IL')
+        });
+        localStorage.setItem('fuel_history', JSON.stringify(history));
+        loadHistory();
+        alert("הנסיעה נוספה למעקב ההוצאות החודשי בהצלחה!");
+    }
+
+    function loadHistory() {
+        let history = JSON.parse(localStorage.getItem('fuel_history')) || [];
+        const list = document.getElementById('historyList');
+        list.innerHTML = '';
+        let total = 0;
+
+        if (history.length === 0) {
+            list.innerHTML = '<li style="text-align: center; color: var(--text-muted); padding: 10px;">אין נסיעות שמורות בהיסטוריה</li>';
+        } else {
+            history.forEach(item => {
+                total += item.cost;
+                let li = document.createElement('li');
+                li.className = 'history-item';
+                li.innerHTML = `<span>${item.date} - ${item.route}</span> <strong style="color: #34d399;">₪${item.cost.toFixed(2)}</strong>`;
+                list.appendChild(li);
+            });
+        }
+        document.getElementById('historyTotalCost').innerText = `₪${total.toFixed(2)}`;
+    }
+
+    function clearHistory() {
+        if (confirm("האם לאפס את היסטוריית הנסיעות?")) {
+            localStorage.removeItem('fuel_history');
+            loadHistory();
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('carInput').value = '';
+        document.getElementById('origin').value = '';
+        document.getElementById('destination').value = '';
+        document.getElementById('kmPerLiter').value = '15';
+        document.getElementById('fuelPrice').value = '7.55';
+        document.getElementById('passengersCount').value = '1';
+        document.getElementById('roundTrip').checked = false;
+        document.getElementById('resultBox').style.display = 'none';
+        document.getElementById('loadingStatus').style.display = 'none';
+        lastTripData = null;
+    }
+</script>
+
+</body>
+</html>
